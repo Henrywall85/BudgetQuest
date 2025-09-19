@@ -3,7 +3,11 @@
 }
 
 .main-content {
-  margin-left: 238px;
-  padding: 20px;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: 20px;
 }
