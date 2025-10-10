@@ -1,12 +1,11 @@
 import React from 'react';
+import NextPayCheck_Card from './NextPayCheck_Card';
 import './BudgetContainer.css'
 
 function BudgetContainer ({title}){
     return(
     <div className="Budget-Container">
-        <div className="container-actions">
-            {/* Placeholder for future actions like search or buttons */}
-        </div>
+          <NextPayCheck_Card title={title}/>
     </div>
     );
 }

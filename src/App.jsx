@@ -10,6 +10,7 @@ function App(){
     <Sidebar />
     
     <div className="main-content">
+      <Header/>
       <BudgetContainer/>
     </div>
   </div>

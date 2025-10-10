@@ -1,0 +1,17 @@
+.nextpaycheck_card{
+    width: 1000px;
+    height: 305px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+}
+
+.card-header{
+    padding: 0 0 0 25px;
+    background: #707070FF;
+    border-radius: 25px 25px 0 0;
+}
+
+.card-header h3{
+    padding: 14px 0 14px 0;
+}
