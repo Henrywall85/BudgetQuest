@@ -2,35 +2,37 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 40px 0 40px 0;
 }
 
-.income_form{
-    position: relative;
-    z-index: 2;
+.income_form {
+    padding: 0 25px 0 25px;
+    box-sizing: border-box;
 }
 
-.income_form.card{
+.income_form.card {
     width: 515px;
     height: auto;
 }
 
-.form-header{
+/* Form Header */
+.form-header {
     display: flex;
     justify-content: start;
     align-items: flex-start;
-    padding: 0 25px 0 25px;
     align-items: center;
     justify-content: space-between;
 }
 
-.form-header-content h2{
+.form-header-content h2 {
     padding: 14px 0 0 0;
     color: black;
     display: flex;
-
 }
 
-.close-form-button{
+.close-form-button {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -44,19 +46,69 @@
     padding: 0;
 }
 
-.form-container{
-    text-align: center;
-    padding: 40px 0 40px 0;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    width: 100%;
+    gap: 80px;
 }
 
-/* .source-amount{
-    display: flex;
-    justify-content: right;
-    width: 150px;
-    background-color: white;
-    border-radius: 0 0 25px 25px;
-    box-shadow: 0 4px 4px 0 #00000026;
-    right: 0;
-    padding: 5px 24px 5px 24px;
-    z-index: 1;
-} */
+/* Input Wrapper */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Underline Input */
+.underline-input {
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #e7e7e7;
+    padding: 12px 4px;
+    font-size: 24px;
+    color: #b1b2b5;
+    transition: border-color 0.3s ease;
+}
+
+.underline-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.underline-input:hover {
+    border-color: #b1b2b5;
+}
+
+/* Floating Label */
+.float-label {
+    position: absolute;
+    left: 4px;
+    top: 12px;
+    font-size: 24px;
+    color: #9b9b9b;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.3s ease;
+    z-index: 1; /* Below dropdown when not active */
+}
+
+/* Move and shrink label when input-wrapper has 'active' class */
+.input-wrapper.active .float-label {
+    transform: translate3d(0, -25px, 0);
+    font-size: 14px;
+    font-weight: 500;
+    color: #4CAF50;
+    z-index: 2; /* Above elements when floated */
+}
+
+/* Hide blank option in select input and dropdown */
+#income-frequency option[value=""] {
+    display: none; /* Hide in dropdown */
+    color: transparent; /* Ensure no text in input field */
+}
