@@ -1,0 +1,71 @@
+/* .nextpaycheck_card{
+    width: 1000px;
+    height: 305px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+} */
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.income_card{
+    border-bottom-right-radius: 0 !important;
+    position: relative;
+    z-index: 2;
+}
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px 0 25px;
+    background: #707070FF;
+    border-radius: 25px 25px 0 0;
+}
+
+.card-header h3{
+    padding: 14px 0 14px 0;
+}
+
+.add-income-button{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.income-container{
+    text-align: center;
+    padding: 40px 0 40px 0;
+}
+
+.income-container h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 600;
+    color: rgba(112, 112, 112, .245);
+}
+
+.source-amount{
+    display: flex;
+    justify-content: right;
+    width: 150px;
+    background-color: white;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+    right: 0;
+    padding: 5px 24px 5px 24px;
+    z-index: 1;
+}

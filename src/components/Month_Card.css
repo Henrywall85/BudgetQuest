@@ -1,0 +1,33 @@
+.month_card{
+    width: 1000px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+    text-align: center;
+    padding: 30px 0 30px 0;
+    gap: 20px;
+}
+
+/* .card_message{
+    border: dashed 1px red;
+
+} */
+
+.card_message p{
+    line-height: 3rem;
+}
+
+.create_plan_button{
+    background-color: #54b93b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 20px 10px 20px;
+}

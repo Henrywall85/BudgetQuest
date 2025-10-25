@@ -7,6 +7,9 @@ function NextPayCheck_Card ({title}){
         <div className="card-header">
             <h3>NEXT PAYCHECK</h3>
         </div>
+        <div className="income-container">
+            
+        </div>
     </div>
     );
 }
