@@ -1,13 +1,13 @@
 import React from 'react';
 import './Income_Card.css'
 
-function Income_Card ({title}){
+function Income_Card ({title, onAddIncome}){
     return(
     <div className="card-container">
         <div className="income_card card">
             <div className="card-header">
                 <h3>INCOME</h3>
-                <button className="add-income-button">+</button>
+                <button className="add-income-button" onClick={onAddIncome}>+</button>
             </div>
             <div className="income-container">
                 <h2>INCOME SOURCE</h2>

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import './Income_Form.css'
 
-function Income_Form ({title}){
+function Income_Form ({title, onClose}){
     const [source, setSource] = useState('');
     const [amount, setAmount] = useState('');
-    const [frequency, setFrequency] = useState(''); // State for select
+    const [frequency, setFrequency] = useState('');
+    const [nextDeposit, setNextDeposit] = useState(null);
     const [saved, setSaved] = useState(false);
 
     const handleSubmit = (e) => {
@@ -45,7 +48,9 @@ function Income_Form ({title}){
                     <h2>Add income</h2>
                     <p>Enter your income details to add it to your plan.</p>
                 </div>
-                <button className="close-form-button"><FontAwesomeIcon icon={faXmark} /></button>
+                <button className="close-form-button" onClick={onClose}>
+                    <FontAwesomeIcon icon={faXmark} />
+                </button>
             </div>
                 <form className="income-form">
                     <div className="form-group">
@@ -107,6 +112,30 @@ function Income_Form ({title}){
                             </select>
                             <label htmlFor="income-frequency" className="float-label">Frequency</label>
                         </div>
+
+                        {/* NEXT DEPOSIT */}
+                        <div className="input-wrapper date-input-wrapper">
+                            <DatePicker
+                                id="next-deposit"
+                                selected={nextDeposit}
+                                onChange={(date) => setNextDeposit(date)}
+                                className="underline-input"
+                                dateFormat="MM/dd/yyyy"
+                                placeholderText=""
+                                onFocus={() => {
+                                    const wrapper = document.querySelector('.date-input-wrapper');
+                                    wrapper.classList.add('active');
+                                }}
+                                onBlur={(e) => {
+                                    const wrapper = document.querySelector('.date-input-wrapper');
+                                    if (!nextDeposit) {
+                                        wrapper.classList.remove('active');
+                                    }
+                                }}
+                            />
+                            <label htmlFor="next-deposit" className="float-label">Next Deposit</label>
+                        </div>
+                        <button type="submit" className="save-button" onClick={handleSubmit}>Save</button>
                     </div>
                 </form>
         </div>

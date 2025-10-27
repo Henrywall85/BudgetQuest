@@ -1,13 +1,14 @@
 .Budget-Container{
     background-color: #e1e1e1;
     width: 100%;
-    height: 100vh;
+    min-height: calc(100vh); /* Subtracting header height */
     border-radius: 20px 0 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 50px 0 50px 0;
     gap: 50px;
+    box-sizing: border-box;
 }
 
 #remaining-budget{
@@ -31,4 +32,33 @@ linebreak{
     background: white;
     border-radius: 25px;
     box-shadow: 0 4px 4px 0 #00000026;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.form-container {
+    padding: 0;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
