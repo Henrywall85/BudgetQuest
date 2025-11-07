@@ -10,6 +10,21 @@ function Income_Card ({title, onAddIncome}){
                 <button className="add-income-button" onClick={onAddIncome}>+</button>
             </div>
             <div className="income-container">
+                <div className="income-section">
+                    <div className="income-section-icon section-container"><h1>H</h1></div>
+                    
+                    {/* INCOME NAME */}
+                    <div className="income-section-source section-container">
+                        <h2>Henry's Income</h2>
+                        <p>Bi-Weekly</p>
+                    </div>
+
+                    {/* INCOME AMOUNT  */}
+                    <div className="income-section-amount section-container">
+                        <h2>$0.00</h2>
+                    </div>
+
+                </div>
                 <h2>INCOME SOURCE</h2>
             </div>   
         </div>
