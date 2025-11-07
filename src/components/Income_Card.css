@@ -65,6 +65,10 @@
     align-items: center;
 }
 
+.income-section:last-child {
+    border-bottom: none;
+}
+
 .income-section-icon{
     display: flex;
     align-items: center;
@@ -88,6 +92,10 @@
     flex-grow: 1;
 }
 
+.empty-source{
+    align-items: center;
+    justify-content: center;
+}
 .income-section-source h2, .income-section-amount h2{
     color: black;
     font-size: 18px;
@@ -97,7 +105,8 @@
 .source-amount{
     display: flex;
     justify-content: right;
-    width: 150px;
+    width: auto;
+    min-width: 150px;
     background-color: white;
     border-radius: 0 0 25px 25px;
     box-shadow: 0 4px 4px 0 #00000026;

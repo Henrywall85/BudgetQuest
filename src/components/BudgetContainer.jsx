@@ -8,11 +8,29 @@ import './BudgetContainer.css'
 function BudgetContainer ({title}){
   const [planCreated, setPlanCreated] = React.useState(false);
   const [showIncomeForm, setShowIncomeForm] = useState(false);
+  const [incomeData, setIncomeData] = useState([]);
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+  };
+
+  const handleSaveIncome = (data) => {
+    setIncomeData(prevData => [...prevData, data]);
+    setShowIncomeForm(false);
+  };
 
   // Get current month and year
   const currentDate = new Date();
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const year = currentDate.getFullYear();
+
+  // Calculate total income
+  const totalIncome = incomeData.reduce((sum, income) => 
+    sum + parseFloat(income.amount || 0), 0
+  );
 
   return(
     <div className="Budget-Container">
@@ -24,14 +42,24 @@ function BudgetContainer ({title}){
           <div id="remaining-budget">
             <h2>{month}, {year}</h2>
             <linebreak/>
-            <h1>$0.00</h1>
+            <h1>${formatCurrency(totalIncome)}</h1>
             <p>Left To Budget</p>
             <linebreak/>
           </div>
-          <Income_Card title={title} onAddIncome={() => setShowIncomeForm(true)}/>
+          <Income_Card 
+            title={title} 
+            onAddIncome={() => setShowIncomeForm(true)}
+            incomeData={incomeData}
+            totalIncome={formatCurrency(totalIncome)}
+            formatCurrency={formatCurrency}
+          />
           {showIncomeForm && (
             <div className="modal-overlay">
-              <Income_Form title={title} onClose={() => setShowIncomeForm(false)}/>
+              <Income_Form 
+                title={title} 
+                onClose={() => setShowIncomeForm(false)}
+                onSave={handleSaveIncome}
+              />
             </div>
           )}
         </>

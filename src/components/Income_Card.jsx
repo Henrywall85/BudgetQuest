@@ -1,7 +1,7 @@
 import React from 'react';
 import './Income_Card.css'
 
-function Income_Card ({title, onAddIncome}){
+function Income_Card ({title, onAddIncome, incomeData, totalIncome, formatCurrency}){
     return(
     <div className="card-container">
         <div className="income_card card">
@@ -10,26 +10,32 @@ function Income_Card ({title, onAddIncome}){
                 <button className="add-income-button" onClick={onAddIncome}>+</button>
             </div>
             <div className="income-container">
-                <div className="income-section">
-                    <div className="income-section-icon section-container"><h1>H</h1></div>
-                    
-                    {/* INCOME NAME */}
-                    <div className="income-section-source section-container">
-                        <h2>Henry's Income</h2>
-                        <p>Bi-Weekly</p>
-                    </div>
+                {incomeData && incomeData.length > 0 ? (
+                    incomeData.map((income, index) => (
+                        <div className="income-section" key={index}>
+                            <div className="income-section-icon section-container">
+                                <h1>{income.icon}</h1>
+                            </div>
+                            
+                            <div className="income-section-source section-container">
+                                <h2>{income.source}</h2>
+                                <p>{income.frequency}</p>
+                            </div>
 
-                    {/* INCOME AMOUNT  */}
-                    <div className="income-section-amount section-container">
-                        <h2>$0.00</h2>
+                            <div className="income-section-amount section-container">
+                                <h2>${formatCurrency(income.amount)}</h2>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="income-section empty-source">
+                        <h2>INCOME SOURCE</h2>
                     </div>
-
-                </div>
-                <h2>INCOME SOURCE</h2>
+                )}
             </div>   
         </div>
         <div className="source-amount">
-            <h2>$0.00</h2>
+            <h2>${totalIncome}</h2>
         </div>
     </div>
     );

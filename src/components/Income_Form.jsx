@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './Income_Form.css'
 
-function Income_Form ({title, onClose}){
+function Income_Form ({title, onClose, onSave}) {
     const [source, setSource] = useState('');
     const [amount, setAmount] = useState('');
     const [frequency, setFrequency] = useState('');
@@ -14,9 +14,14 @@ function Income_Form ({title, onClose}){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Trim and only save if something was entered
-        if (source.trim() || amount.trim()) {
-            setSaved(true);
+        if (source.trim() && amount.trim() && frequency && nextDeposit) {
+            onSave({
+                source: source.trim(),
+                amount: amount.trim(),
+                frequency: frequency,
+                nextDeposit: nextDeposit,
+                icon: source.charAt(0).toUpperCase()
+            });
         }
     };
 
@@ -106,9 +111,9 @@ function Income_Form ({title, onClose}){
                                 required
                             >
                                 <option value="" disabled></option>
-                                <option value="monthly">Monthly</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="bi-weekly">Bi-Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Bi-weekly">Bi-Weekly</option>
                             </select>
                             <label htmlFor="income-frequency" className="float-label">Frequency</label>
                         </div>
