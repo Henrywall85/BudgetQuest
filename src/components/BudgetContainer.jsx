@@ -5,29 +5,16 @@ import Income_Card from './Income_Card';
 import Income_Form from './Income_Form';
 import './BudgetContainer.css'
 
-function BudgetContainer ({title}){
+function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, formatCurrency = (n)=>n}){
   const [planCreated, setPlanCreated] = React.useState(false);
   const [showIncomeForm, setShowIncomeForm] = useState(false);
-  const [incomeData, setIncomeData] = useState([]);
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(amount);
-  };
-
-  const handleSaveIncome = (data) => {
-    setIncomeData(prevData => [...prevData, data]);
-    setShowIncomeForm(false);
-  };
 
   // Get current month and year
   const currentDate = new Date();
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const year = currentDate.getFullYear();
 
-  // Calculate total income
+  // Calculate total income from shared incomeData prop
   const totalIncome = incomeData.reduce((sum, income) => 
     sum + parseFloat(income.amount || 0), 0
   );
@@ -58,7 +45,7 @@ function BudgetContainer ({title}){
               <Income_Form 
                 title={title} 
                 onClose={() => setShowIncomeForm(false)}
-                onSave={handleSaveIncome}
+                onSave={(data) => { onSaveIncome(data); setShowIncomeForm(false); }}
               />
             </div>
           )}

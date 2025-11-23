@@ -68,20 +68,25 @@
     border-bottom: none;
 }
 
-.income-section-icon{
+.payperiod-section-icon{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
-    background-color: #707070FF;
+    flex-direction: column;
     }
 
-.income-section-icon h1{
+.payperiod-section-icon h1{
     font-size: 32px;
-    color: white;
+    color: black;
     font-weight: 600;
+}
+
+.payperiod-section-icon h2{
+    font-size: 24px;
+    color: black;
+    font-weight: 600;
+    font-style: normal;
 }
 
 .income-section-source{
