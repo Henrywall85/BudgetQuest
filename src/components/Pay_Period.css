@@ -1,0 +1,115 @@
+/* .nextpaycheck_card{
+    width: 1000px;
+    height: 305px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+} */
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.payperiod_card{
+    position: relative;
+    z-index: 2;
+}
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px 0 25px;
+    background: #707070FF;
+    border-radius: 25px 25px 0 0;
+    /* padding: 0; */
+}
+
+.add-income-button{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.income-container{
+    text-align: center;
+    padding: 0 25px 0 25px;
+    /* border: 1px red dashed; */
+}
+
+.income-container h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 600;
+    color: rgba(112, 112, 112, .245);
+}
+/* Income Section */
+
+.income-section{
+    display: flex;
+    padding: 25px 0 25px 0;
+    border-bottom: 1px solid #E0E0E0;
+    gap: 25px;
+    align-items: center;
+}
+
+.income-section:last-child {
+    border-bottom: none;
+}
+
+.income-section-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #707070FF;
+    }
+
+.income-section-icon h1{
+    font-size: 32px;
+    color: white;
+    font-weight: 600;
+}
+
+.income-section-source{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.empty-source{
+    align-items: center;
+    justify-content: center;
+}
+.income-section-source h2, .income-section-amount h2{
+    color: black;
+    font-size: 18px;
+    font-style: normal;
+}
+
+.source-amount{
+    display: flex;
+    justify-content: right;
+    width: auto;
+    min-width: 150px;
+    background-color: white;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+    right: 0;
+    padding: 5px 24px 5px 24px;
+    z-index: 1;
+}

@@ -40,6 +40,11 @@ p{
     /* font-size: 1.1rem; */
 }
 
+/* active nav link */
+.nav-link.active {
+  color: #54b93b;
+  font-weight: 600;
+}
 
 /* SIDEBAR NAMECARD */
 .name-card{

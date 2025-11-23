@@ -1,7 +1,7 @@
 import React from 'react';
 import './Sidebar.css'
 
-function Sidebar(){
+function Sidebar({ onNavigate = () => {}, active = 'dashboard' }){
     return(
         <div className='sidebar'>
             <div className='name-card'>
@@ -15,9 +15,15 @@ function Sidebar(){
             </div>
             <span className='divider'></span>
             <ul className="sidebar-nav">
-                <li className="nav-item"><a href="dashboard" className="nav-link">Dashboard</a></li>
-                <li className="nav-item"><a href="planner" className="nav-link">Planner</a></li>
-                <li className="nav-item"><a href="transactions" className="nav-link">Transactions</a></li>
+                <li className="nav-item">
+                  <a href="#" className={`nav-link ${active === 'dashboard' ? 'active' : ''}`} onClick={(e)=>{ e.preventDefault(); onNavigate('dashboard'); }}>Dashboard</a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className={`nav-link ${active === 'planner' ? 'active' : ''}`} onClick={(e)=>{ e.preventDefault(); onNavigate('planner'); }}>Planner</a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className={`nav-link ${active === 'transactions' ? 'active' : ''}`} onClick={(e)=>{ e.preventDefault(); onNavigate('transactions'); }}>Transactions</a>
+                </li>
             </ul>
         </div>
     );
