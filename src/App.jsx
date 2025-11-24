@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import BudgetContainer from './components/BudgetContainer';
@@ -8,8 +8,36 @@ import './App.css'
 function App(){
   const [activeSection, setActiveSection] = useState('planner'); // default to planner
 
-  // Lifted shared income state so Dashboard and Planner share same data
-  const [incomeData, setIncomeData] = useState([]);
+  // Persisted income storage key
+  const INCOME_KEY = 'budgetquest:incomeData';
+
+  // Load persisted incomeData from localStorage, rehydrate nextDeposit -> Date
+  const [incomeData, setIncomeData] = useState(() => {
+    try {
+      const raw = localStorage.getItem(INCOME_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return parsed.map(i => ({
+        ...i,
+        nextDeposit: i.nextDeposit ? new Date(i.nextDeposit) : null
+      }));
+    } catch (err) {
+      return [];
+    }
+  });
+
+  // Persist incomeData to localStorage (serialize Date -> ISO)
+  useEffect(() => {
+    try {
+      const serializable = incomeData.map(i => ({
+        ...i,
+        nextDeposit: i.nextDeposit ? i.nextDeposit.toISOString() : null
+      }));
+      localStorage.setItem(INCOME_KEY, JSON.stringify(serializable));
+    } catch (err) {
+      // ignore storage errors
+    }
+  }, [incomeData]);
 
   const formatCurrency = (amount) => {
     const n = parseFloat(amount) || 0;
@@ -19,8 +47,9 @@ function App(){
     }).format(n);
   };
 
+  // Called when Income_Form saves a new income entry
   const handleSaveIncome = (data) => {
-    // ensure nextDeposit is a Date object
+    // normalize nextDeposit (accept Date or string)
     const normalized = {
       ...data,
       nextDeposit: data.nextDeposit ? new Date(data.nextDeposit) : null,

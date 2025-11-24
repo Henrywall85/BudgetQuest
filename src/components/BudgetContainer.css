@@ -1,7 +1,7 @@
 .Budget-Container{
     background-color: #e1e1e1;
     width: 100%;
-    min-height: calc(100vh); /* Subtracting header height */
+    flex: 1; /* fill remaining height of main-content without forcing overflow */
     border-radius: 20px 0 0 0;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,7 @@
     padding: 50px 0 50px 0;
     gap: 50px;
     box-sizing: border-box;
+    overflow: auto; /* let content scroll inside the container if needed */
 }
 
 #remaining-budget{

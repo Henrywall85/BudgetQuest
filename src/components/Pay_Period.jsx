@@ -72,7 +72,7 @@ function Pay_Period ({title, incomeData = [], totalIncome, formatCurrency = (n)=
                 <h3>NEXT PAYCHECK</h3>
             </div>
 
-            <div className="income-container">
+            <div className="payperiod-container income-container">
                 {next ? (
                   <>
                     {next.entries.map((income, index) => {
@@ -82,7 +82,7 @@ function Pay_Period ({title, incomeData = [], totalIncome, formatCurrency = (n)=
                       const day = dt ? dt.getDate() : '';
 
                       return (
-                      <div className="income-section" key={index}>
+                      <div className="payperiod-section" key={index}>
                           <div className="payperiod-section-icon section-container">
                               <h2>{month}</h2>
                               <h1>{day}</h1>
