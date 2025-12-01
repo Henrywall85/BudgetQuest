@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './Income_Form.css'
 
-function Income_Form ({title, onClose, onSave}) {
+function Income_Form ({title, onClose, onSave, initialData = null}) {
     const [source, setSource] = useState('');
     const [amount, setAmount] = useState('');
     const [frequency, setFrequency] = useState('');
     const [nextDeposit, setNextDeposit] = useState(null);
     const [saved, setSaved] = useState(false);
+
+    // initialize when editing existing entry
+    useEffect(() => {
+        if (initialData) {
+            setSource(initialData.source || '');
+            setAmount(initialData.amount || '');
+            setFrequency(initialData.frequency || '');
+            setNextDeposit(initialData.nextDeposit ? new Date(initialData.nextDeposit) : null);
+        } else {
+            setSource('');
+            setAmount('');
+            setFrequency('');
+            setNextDeposit(null);
+        }
+    }, [initialData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,10 +53,12 @@ function Income_Form ({title, onClose, onSave}) {
             setFrequency(input.value); // Update frequency state
         }
         const hasValue = isSelect ? input.value && input.value !== '' : input.value;
-        if (hasValue || document.activeElement === input) {
-            wrapper.classList.add('active');
-        } else {
-            wrapper.classList.remove('active');
+        if (wrapper) {
+            if (hasValue || document.activeElement === input) {
+                wrapper.classList.add('active');
+            } else {
+                wrapper.classList.remove('active');
+            }
         }
     };
 
@@ -50,7 +67,7 @@ function Income_Form ({title, onClose, onSave}) {
         <div className="income_form card">
             <div className="form-header">
                 <div className="form-header-content">
-                    <h2>Add income</h2>
+                    <h2>{initialData ? 'Edit income' : 'Add income'}</h2>
                     <p>Enter your income details to add it to your plan.</p>
                 </div>
                 <button className="close-form-button" onClick={onClose}>
@@ -60,7 +77,7 @@ function Income_Form ({title, onClose, onSave}) {
                 <form className="income-form">
                     <div className="form-group">
                         {/* INCOME SOURCE */}
-                        <div className="input-wrapper">
+                        <div className={`input-wrapper ${source ? 'active' : ''}`}>
                             <input 
                                 type="text" 
                                 id="income-source" 
@@ -79,7 +96,7 @@ function Income_Form ({title, onClose, onSave}) {
                         </div>
 
                         {/* INCOME AMOUNT */}
-                        <div className="input-wrapper">
+                        <div className={`input-wrapper ${amount ? 'active' : ''}`}>
                             <input
                                 type="text"
                                 id="income-amount"
@@ -98,13 +115,12 @@ function Income_Form ({title, onClose, onSave}) {
                         </div>
 
                         {/* FREQUENCY */}
-                        <div className="input-wrapper">
+                        <div className={`input-wrapper ${frequency ? 'active' : ''}`}>
                             <select
                                 id="income-frequency"
                                 name="income-frequency"
                                 className='underline-input'
                                 value={frequency}
-                                defaultValue=""
                                 onChange={handleInputChange}
                                 onFocus={handleInputChange}
                                 onBlur={handleInputChange}
@@ -119,7 +135,7 @@ function Income_Form ({title, onClose, onSave}) {
                         </div>
 
                         {/* NEXT DEPOSIT */}
-                        <div className="input-wrapper date-input-wrapper">
+                        <div className={`input-wrapper date-input-wrapper ${nextDeposit ? 'active' : ''}`}>
                             <DatePicker
                                 id="next-deposit"
                                 selected={nextDeposit}
@@ -128,14 +144,10 @@ function Income_Form ({title, onClose, onSave}) {
                                 dateFormat="MM/dd/yyyy"
                                 placeholderText=""
                                 onFocus={() => {
-                                    const wrapper = document.querySelector('.date-input-wrapper');
-                                    wrapper.classList.add('active');
+                                    /* wrapper state is handled by className based on nextDeposit */
                                 }}
-                                onBlur={(e) => {
-                                    const wrapper = document.querySelector('.date-input-wrapper');
-                                    if (!nextDeposit) {
-                                        wrapper.classList.remove('active');
-                                    }
+                                onBlur={() => {
+                                    /* wrapper state is handled by className based on nextDeposit */
                                 }}
                             />
                             <label htmlFor="next-deposit" className="float-label">Next Deposit</label>

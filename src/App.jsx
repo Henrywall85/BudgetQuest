@@ -57,6 +57,20 @@ function App(){
     setIncomeData(prev => [...prev, normalized]);
   };
 
+  // Update existing income entry by index
+  const handleUpdateIncome = (index, data) => {
+    const normalized = {
+      ...data,
+      nextDeposit: data.nextDeposit ? new Date(data.nextDeposit) : null,
+    };
+    setIncomeData(prev => prev.map((item, i) => (i === index ? { ...item, ...normalized } : item)));
+  };
+
+  // Delete income entry by index
+  const handleDeleteIncome = (index) => {
+    setIncomeData(prev => prev.filter((_, i) => i !== index));
+  };
+
   return(
     <div className="app-container">
       <Sidebar onNavigate={setActiveSection} active={activeSection} />
@@ -68,6 +82,8 @@ function App(){
           <BudgetContainer 
             incomeData={incomeData} 
             onSaveIncome={handleSaveIncome}
+            onUpdateIncome={handleUpdateIncome}
+            onDeleteIncome={handleDeleteIncome}
             formatCurrency={formatCurrency}
           />
         ) : activeSection === 'dashboard' ? (

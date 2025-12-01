@@ -65,6 +65,8 @@
     border-bottom: 1px solid #E0E0E0;
     /* gap: 25px; */
     align-items: center;
+    position: relative; /* make this relative so the delete drawer can be positioned absolute */
+    overflow: visible;  /* allow drawer to be visible outside bounds */
 }
 
 .income-section:last-child {
@@ -98,6 +100,7 @@
 .empty-source{
     align-items: center;
     justify-content: center;
+    padding: 25px 0 25px 0;
 }
 .income-section-source h2, .income-section-amount h2{
     color: black;
@@ -119,20 +122,81 @@
 }
 
 /* EDIT INCOME SECTION */
-.edit-income-section-container{
-    background-color: red;
-    width: 50px;
-    align-self: stretch;
-    color: white;
+/* use a width-drawer with a background ::after fill that grows left->right.
+   Hidden state: width:0, visibility:hidden, pointer-events:none, opacity:0.
+   Visible state: width:50px, opacity:1, ::after expands to fill; slight fade added. */
+.delete-income-section-container{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;                    /* start collapsed */
+    overflow: hidden;            /* hide contents until open */
+    display: flex;
     align-items: center;
-    display: none;
-    padding: 5px;
-    /* font-size: 10px; */
     justify-content: center;
+    padding: 0;                  /* padding inside the visible area only */
+    z-index: 3;
+    box-sizing: border-box;
+
+    /* interactions / accessibility */
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+
+    /* start transparent for fade-in */
+    opacity: 0;
+
+    /* animate width and opacity */
+    transition: width .25s ease, opacity .18s ease, visibility 0s linear .25s;
 }
 
-.edit-income-section-container.visible {
-    display: flex;
+/* background "fill" that animates separately for a smooth drawer feel */
+.delete-income-section-container::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;                     /* animate this to 100% when open */
+    background-color: red;
+    z-index: 0;
+    transition: width .25s ease;
+}
+
+/* bring the drawer to life: expand width, reveal background and make interactive */
+.delete-income-section-container.visible {
+    width: 50px;                  /* final drawer width */
+    pointer-events: auto;
+    user-select: auto;
+    visibility: visible;
+    opacity: 1;                   /* slight fade-in */
+    transition: width .25s ease, opacity .18s ease, visibility 0s linear 0s;
+    cursor: pointer;
+}
+
+.delete-income-section-container.visible::after{
+    width: 100%;
+}
+
+/* ensure icon/children sit above the ::after background */
+.delete-income-section-container > *{
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    padding: 8px;
+}
+
+/* push the row content when the drawer is visible */
+.delete-income-section-container.visible + .income-info-container,
+.delete-income-section-container.visible ~ .income-info-container {
+    margin-left: 75px; /* match drawer width */
+}
+
+/* round the drawer bottom-left to match the row's container, but only for the last row */
+.income-section:last-child .delete-income-section-container,
+.income-section:last-child .delete-income-section-container::after {
+    border-bottom-left-radius: 25px;
 }
 
 /* INCOME INFO */
@@ -146,4 +210,26 @@
     margin-left: 25px;
     padding: 25px 0 25px 0;
     transition: margin-left 0.3s ease;
+}
+
+/* removal animation (user provided) */
+@keyframes removed-item-animation {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+/* apply removal animation to a row when deleting */
+.income-section.removing {
+    animation: removed-item-animation 550ms ease forwards;
+    transform-origin: left center;
+    /* optionally collapse spacing so the following rows move up smoothly */
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
