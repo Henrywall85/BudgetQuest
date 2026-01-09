@@ -6,10 +6,10 @@ import './Expense_Card.css'
 
 function Expense_Card ({title, onAddExpense, onEditExpense = () => {}, expenseData, totalExpenses, formatCurrency, onDeleteExpense}){
     const [expandedIndex, setExpandedIndex] = useState(null);
-    const [removingIndices, setRemovingIndices] = useState([]); // track rows currently animating out
+    const [removingIndices, setRemovingIndices] = useState([]);
     const hideTimerRef = useRef(null);
-    const AUTO_HIDE_MS = 2000; // 2 seconds
-    const REMOVE_ANIM_MS = 250; // match CSS animation duration
+    const AUTO_HIDE_MS = 2000;
+    const REMOVE_ANIM_MS = 250;
 
     // helper: clear any running hide timer
     const clearHideTimer = () => {
@@ -76,7 +76,7 @@ function Expense_Card ({title, onAddExpense, onEditExpense = () => {}, expenseDa
     <div className="card-container">
         <div className="income_card card">
             <div className="card-header">
-                <h3>EXPENSES</h3>
+                <h3>{title}</h3>
                 <button className="add-income-button" onClick={onAddExpense}>+</button>
             </div>
             <div className="income-container">
