@@ -153,6 +153,15 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
     setShowCategoryForm(true);
   };
 
+  const handleEditCategory = (cardId) => {
+    setEditingCardId(cardId);
+    const card = expenseCards.find(c => c.id === cardId);
+    if (card) {
+      setEditingData({ source: card.categoryName || '' });
+      setShowCategoryForm(true);
+    }
+  };
+
   return(
     <div className="Budget-Container">
       {!planCreated && (
@@ -182,6 +191,7 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
               key={card.id}
               cardId={card.id}
               title={card.categoryName || 'EXPENSES'}
+              onEditCategory={() => handleEditCategory(card.id)}
               onAddExpense={() => handleAddExpenseToCard(card.id)}
               onEditExpense={(index) => handleEditExpense(card.id, index)}
               expenseData={card.expenses}
@@ -253,19 +263,32 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
           {showCategoryForm && (
             <div className="modal-overlay">
               <Category_Form 
-                title="Add Expense Category"
+                title={editingCardId ? "Edit Category" : "Add Expense Category"}
                 onClose={() => {
                   setShowCategoryForm(false);
                   setEditingIndex(null);
                   setEditingData(null);
+                  setEditingCardId(null);
                 }}
                 onSave={(data) => {
-                  const newCardId = Date.now();
-                  setExpenseCards(prev => [...prev, { id: newCardId, categoryName: data.source, expenses: [] }]);
+                  if (editingCardId) {
+                    // Update existing category
+                    setExpenseCards(prev => prev.map(card => 
+                      card.id === editingCardId 
+                        ? { ...card, categoryName: data.source }
+                        : card
+                    ));
+                  } else {
+                    // Create new category
+                    const newCardId = Date.now();
+                    setExpenseCards(prev => [...prev, { id: newCardId, categoryName: data.source, expenses: [] }]);
+                  }
                   setShowCategoryForm(false);
                   setEditingIndex(null);
                   setEditingData(null);
+                  setEditingCardId(null);
                 }}
+                initialData={editingData}
               />
             </div>
           )}

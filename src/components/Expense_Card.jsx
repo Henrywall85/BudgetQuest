@@ -4,7 +4,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import './Expense_Card.css'
 
-function Expense_Card ({title, onAddExpense, onEditExpense = () => {}, expenseData, totalExpenses, formatCurrency, onDeleteExpense}){
+function Expense_Card ({title, onAddExpense, onEditCategory = () => {}, onEditExpense = () => {}, expenseData, totalExpenses, formatCurrency, onDeleteExpense}){
     const [expandedIndex, setExpandedIndex] = useState(null);
     const [removingIndices, setRemovingIndices] = useState([]);
     const hideTimerRef = useRef(null);
@@ -76,7 +76,7 @@ function Expense_Card ({title, onAddExpense, onEditExpense = () => {}, expenseDa
     <div className="card-container">
         <div className="income_card card">
             <div className="card-header">
-                <h3>{title}</h3>
+                <h3 onClick={onEditCategory} style={{ cursor: 'pointer' }}>{title}</h3>
                 <button className="add-income-button" onClick={onAddExpense}>+</button>
             </div>
             <div className="income-container">
