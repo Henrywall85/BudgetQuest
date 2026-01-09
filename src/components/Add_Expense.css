@@ -1,0 +1,25 @@
+/* .nextpaycheck_card{
+    width: 1000px;
+    height: 305px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px 0 #00000026;
+} */
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.add_expense_card{
+    position: relative;
+    height: 130px !important;
+    align-content: center;
+    text-align: center;
+    background: none !important;
+    box-shadow: none !important;
+    border: 2px dashed #C4C4C4 !important;
+    color: #C4C4C4 !important;
+}
+
