@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import './Category_Form.css'
 
-function Category_Form ({title, onClose, onSave, initialData = null}) {
+function Category_Form ({title, onClose, onSave, onDelete = () => {}, initialData = null}) {
     const [source, setSource] = useState('');
 
     // initialize when editing existing entry
@@ -72,7 +72,10 @@ function Category_Form ({title, onClose, onSave, initialData = null}) {
                             <label htmlFor="category-name" className="float-label">Category Name</label>
                         </div>
                     </div>
-                    <button type="submit" className="save-button" onClick={handleSubmit}>Save</button>
+                    <div className="button-group">
+                        <button type="submit" className="save-button" onClick={handleSubmit}>Save</button>
+                        {initialData && <button type="button" className="delete-button" onClick={onDelete}>Delete</button>}
+                    </div>
                 </form>
         </div>
     </div>

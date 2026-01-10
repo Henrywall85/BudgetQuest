@@ -233,3 +233,9 @@
     padding-top: 0;
     padding-bottom: 0;
 }
+
+/* apply removal animation to the card when deleting */
+.card-container.removing {
+    animation: removed-item-animation 550ms ease forwards;
+    transform-origin: center;
+}

@@ -4,6 +4,7 @@ import Month_Card from './Month_Card';
 import Income_Card from './Income_Card';
 import Expense_Card from './Expense_Card';
 import Income_Form from './Income_Form';
+import Expense_Form from './Expense_Form';
 import Category_Form from './Category_Form';
 import Add_Category from './Add_Category';
 import './BudgetContainer.css'
@@ -17,6 +18,9 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingData, setEditingData] = useState(null);
   const [editingCardId, setEditingCardId] = useState(null);
+
+  // Track removing card IDs for animation
+  const [removingCardIds, setRemovingCardIds] = useState([]);
 
   // Expense cards management - array of cards, each with its own data
   const EXPENSE_CARDS_KEY = 'budgetquest:expenseCards';
@@ -187,7 +191,7 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
           />
           
           {expenseCards.map(card => (
-            <Expense_Card 
+            <Expense_Card
               key={card.id}
               cardId={card.id}
               title={card.categoryName || 'EXPENSES'}
@@ -198,6 +202,7 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
               totalExpenses={formatCurrency(card.expenses.reduce((sum, expense) => sum + parseFloat(expense.amount || 0), 0))}
               formatCurrency={formatCurrency}
               onDeleteExpense={(index) => handleDeleteExpense(card.id, index)}
+              isRemoving={removingCardIds.includes(card.id)}
             />
           ))}
 
@@ -235,7 +240,7 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
           {/* Expense Form */}
           {showExpenseForm && (
             <div className="modal-overlay">
-              <Income_Form 
+              <Expense_Form
                 title="Add Expense"
                 initialData={editingData}
                 onClose={() => {
@@ -288,6 +293,18 @@ function BudgetContainer ({title, incomeData = [], onSaveIncome = () => {}, onUp
                   setEditingData(null);
                   setEditingCardId(null);
                 }}
+                onDelete={editingCardId ? () => {
+                  setRemovingCardIds(prev => [...prev, editingCardId]);
+                  setShowCategoryForm(false);
+                  setEditingIndex(null);
+                  setEditingData(null);
+                  setEditingCardId(null);
+                  // After animation, remove the card
+                  setTimeout(() => {
+                    setExpenseCards(prev => prev.filter(card => card.id !== editingCardId));
+                    setRemovingCardIds(prev => prev.filter(id => id !== editingCardId));
+                  }, 550);
+                } : undefined}
                 initialData={editingData}
               />
             </div>
